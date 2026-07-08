@@ -42,6 +42,21 @@
                     </x-sidebar-link>
                 </div>
             </div>
+
+            <div>
+                <p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Staff') }}</p>
+                <div class="mt-1 space-y-1">
+                    <x-sidebar-link :href="route('staff.staff.index')" :active="request()->routeIs('staff.staff.*')" wire:navigate>
+                        {{ __('Staff') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('staff.attendance.index')" :active="request()->routeIs('staff.attendance.*')" wire:navigate>
+                        {{ __('Attendance') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('staff.leaves.index')" :active="request()->routeIs('staff.leaves.*')" wire:navigate>
+                        {{ __('Leaves') }}
+                    </x-sidebar-link>
+                </div>
+            </div>
         @endrole
     </nav>
 </div>
