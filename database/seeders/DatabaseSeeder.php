@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AcademicYear;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,11 +16,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call(RolePermissionSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $admin = User::factory()->create([
+            'name' => 'School Admin',
+            'email' => 'admin@school.test',
+        ]);
+        $admin->assignRole('admin');
+
+        AcademicYear::factory()->create([
+            'name' => now()->format('Y').'/'.now()->addYear()->format('Y'),
+            'start_date' => now()->startOfYear(),
+            'end_date' => now()->endOfYear(),
         ]);
     }
 }
