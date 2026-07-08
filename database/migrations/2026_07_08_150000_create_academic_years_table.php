@@ -17,7 +17,9 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE academic_years ADD CONSTRAINT chk_academic_years_dates CHECK (end_date > start_date)');
+        if (DB::getDriverName() === 'mysql') {
+            DB::statement('ALTER TABLE academic_years ADD CONSTRAINT chk_academic_years_dates CHECK (end_date > start_date)');
+        }
     }
 
     public function down(): void

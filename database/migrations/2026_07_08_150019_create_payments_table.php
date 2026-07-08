@@ -19,7 +19,9 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE payments ADD CONSTRAINT chk_payments_amount CHECK (amount_paid > 0)');
+        if (DB::getDriverName() === 'mysql') {
+            DB::statement('ALTER TABLE payments ADD CONSTRAINT chk_payments_amount CHECK (amount_paid > 0)');
+        }
     }
 
     public function down(): void

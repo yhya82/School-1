@@ -33,6 +33,20 @@ new class extends Component
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @role('admin|teacher')
+                        <x-nav-link :href="route('academics.years')" :active="request()->routeIs('academics.years')" wire:navigate>
+                            {{ __('Academic Years') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('academics.classes')" :active="request()->routeIs('academics.classes')" wire:navigate>
+                            {{ __('Classes') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('academics.subjects')" :active="request()->routeIs('academics.subjects')" wire:navigate>
+                            {{ __('Subjects') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('academics.class-subjects')" :active="request()->routeIs('academics.class-subjects')" wire:navigate>
+                            {{ __('Assignments') }}
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 

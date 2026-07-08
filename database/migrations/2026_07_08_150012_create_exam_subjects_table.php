@@ -21,7 +21,9 @@ return new class extends Migration
             $table->unique(['exam_id', 'class_subject_id']);
         });
 
-        DB::statement('ALTER TABLE exam_subjects ADD CONSTRAINT chk_exam_subjects_marks CHECK (pass_marks <= max_marks)');
+        if (DB::getDriverName() === 'mysql') {
+            DB::statement('ALTER TABLE exam_subjects ADD CONSTRAINT chk_exam_subjects_marks CHECK (pass_marks <= max_marks)');
+        }
     }
 
     public function down(): void

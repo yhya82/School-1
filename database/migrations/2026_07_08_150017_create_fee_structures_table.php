@@ -19,7 +19,9 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE fee_structures ADD CONSTRAINT chk_fee_structures_amount CHECK (amount > 0)');
+        if (DB::getDriverName() === 'mysql') {
+            DB::statement('ALTER TABLE fee_structures ADD CONSTRAINT chk_fee_structures_amount CHECK (amount > 0)');
+        }
     }
 
     public function down(): void

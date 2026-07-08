@@ -22,7 +22,9 @@ return new class extends Migration
             $table->unique(['section_id', 'day_of_week', 'start_time']);
         });
 
-        DB::statement('ALTER TABLE timetable_slots ADD CONSTRAINT chk_timetable_slots_time CHECK (end_time > start_time)');
+        if (DB::getDriverName() === 'mysql') {
+            DB::statement('ALTER TABLE timetable_slots ADD CONSTRAINT chk_timetable_slots_time CHECK (end_time > start_time)');
+        }
     }
 
     public function down(): void
