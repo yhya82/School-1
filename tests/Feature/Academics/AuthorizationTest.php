@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Academics;
 
+use App\Livewire\Academics\AcademicYearCreate;
+use App\Livewire\Academics\ClassSubjectCreate;
 use App\Models\AcademicYear;
 use App\Models\SchoolClass;
 use App\Models\Subject;
@@ -42,9 +44,10 @@ class AuthorizationTest extends TestCase
         $admin->assignRole('admin');
 
         $this->actingAs($admin)->get('/academics/years')->assertOk();
+        $this->actingAs($admin)->get('/academics/years/create')->assertOk();
 
         Livewire::actingAs($admin)
-            ->test(\App\Livewire\Academics\AcademicYears::class)
+            ->test(AcademicYearCreate::class)
             ->set('name', '2031/2032')
             ->set('start_date', '2031-01-01')
             ->set('end_date', '2032-01-01')
@@ -53,19 +56,29 @@ class AuthorizationTest extends TestCase
         $this->assertDatabaseHas('academic_years', ['name' => '2031/2032']);
     }
 
+    public function test_admin_can_edit_an_academic_year(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+        $year = AcademicYear::factory()->create();
+
+        $this->actingAs($admin)->get("/academics/years/{$year->id}/edit")->assertOk();
+
+        Livewire::actingAs($admin)
+            ->test(\App\Livewire\Academics\AcademicYearEdit::class, ['year' => $year])
+            ->set('name', 'Renamed Year')
+            ->call('save');
+
+        $this->assertDatabaseHas('academic_years', ['id' => $year->id, 'name' => 'Renamed Year']);
+    }
+
     public function test_teacher_can_view_but_not_create_subjects(): void
     {
         $teacher = User::factory()->create();
         $teacher->assignRole('teacher');
 
         $this->actingAs($teacher)->get('/academics/subjects')->assertOk();
-
-        Livewire::actingAs($teacher)
-            ->test(\App\Livewire\Academics\Subjects::class)
-            ->set('name', 'Hacked Subject')
-            ->set('code', 'HACK1')
-            ->call('save')
-            ->assertForbidden();
+        $this->actingAs($teacher)->get('/academics/subjects/create')->assertForbidden();
 
         $this->assertDatabaseMissing('subjects', ['code' => 'HACK1']);
     }
@@ -79,13 +92,13 @@ class AuthorizationTest extends TestCase
         $subject = Subject::factory()->create();
 
         Livewire::actingAs($admin)
-            ->test(\App\Livewire\Academics\ClassSubjects::class)
+            ->test(ClassSubjectCreate::class)
             ->set('class_id', $class->id)
             ->set('subject_id', $subject->id)
             ->call('save');
 
         Livewire::actingAs($admin)
-            ->test(\App\Livewire\Academics\ClassSubjects::class)
+            ->test(ClassSubjectCreate::class)
             ->set('class_id', $class->id)
             ->set('subject_id', $subject->id)
             ->call('save')

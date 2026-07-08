@@ -1,0 +1,47 @@
+<div class="h-full flex flex-col bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 w-64">
+    <div class="h-16 flex items-center px-4 border-b border-gray-100 dark:border-gray-700">
+        <a href="{{ route('dashboard') }}" wire:navigate>
+            <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+        </a>
+    </div>
+
+    <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+        <div class="space-y-1">
+            <x-sidebar-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                {{ __('Dashboard') }}
+            </x-sidebar-link>
+        </div>
+
+        @role('admin|teacher')
+            <div>
+                <p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Academics') }}</p>
+                <div class="mt-1 space-y-1">
+                    <x-sidebar-link :href="route('academics.years.index')" :active="request()->routeIs('academics.years.*')" wire:navigate>
+                        {{ __('Academic Years') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('academics.classes.index')" :active="request()->routeIs('academics.classes.*')" wire:navigate>
+                        {{ __('Classes') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('academics.subjects.index')" :active="request()->routeIs('academics.subjects.*')" wire:navigate>
+                        {{ __('Subjects') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('academics.class-subjects.index')" :active="request()->routeIs('academics.class-subjects.*')" wire:navigate>
+                        {{ __('Assignments') }}
+                    </x-sidebar-link>
+                </div>
+            </div>
+
+            <div>
+                <p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Students') }}</p>
+                <div class="mt-1 space-y-1">
+                    <x-sidebar-link :href="route('students.students.index')" :active="request()->routeIs('students.students.*')" wire:navigate>
+                        {{ __('Students') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('students.guardians.index')" :active="request()->routeIs('students.guardians.*')" wire:navigate>
+                        {{ __('Guardians') }}
+                    </x-sidebar-link>
+                </div>
+            </div>
+        @endrole
+    </nav>
+</div>

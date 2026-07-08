@@ -15,22 +15,47 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <livewire:layout.navigation />
+        <div x-data="{ sidebarOpen: false }" class="min-h-screen flex bg-gray-100 dark:bg-gray-900">
+            <!-- Mobile sidebar backdrop -->
+            <div
+                x-show="sidebarOpen"
+                x-transition:enter="transition-opacity ease-linear duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition-opacity ease-linear duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="sidebarOpen = false"
+                class="fixed inset-0 z-30 bg-gray-900/50 lg:hidden"
+                style="display: none;"
+            ></div>
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+            <!-- Sidebar -->
+            <aside
+                :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+                class="fixed inset-y-0 left-0 z-40 transform transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:z-auto"
+            >
+                @include('partials.sidebar')
+            </aside>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            <!-- Main content -->
+            <div class="flex-1 flex flex-col min-w-0">
+                <livewire:layout.navigation />
+
+                <!-- Page Heading -->
+                @if (isset($header))
+                    <header class="bg-white dark:bg-gray-800 shadow">
+                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endif
+
+                <!-- Page Content -->
+                <main class="flex-1 overflow-y-auto">
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
     </body>
 </html>
