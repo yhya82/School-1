@@ -3,15 +3,24 @@
 use App\Livewire\Academics\AcademicYearCreate;
 use App\Livewire\Academics\AcademicYearEdit;
 use App\Livewire\Academics\AcademicYearIndex;
+use App\Livewire\Academics\AttendanceIndex;
+use App\Livewire\Academics\AttendanceMark;
 use App\Livewire\Academics\ClassCreate;
 use App\Livewire\Academics\ClassEdit;
 use App\Livewire\Academics\ClassIndex;
 use App\Livewire\Academics\ClassSubjectCreate;
 use App\Livewire\Academics\ClassSubjectEdit;
 use App\Livewire\Academics\ClassSubjectIndex;
+use App\Livewire\Academics\ExamCreate;
+use App\Livewire\Academics\ExamEdit;
+use App\Livewire\Academics\ExamIndex;
+use App\Livewire\Academics\ExamResultsEntry;
 use App\Livewire\Academics\SubjectCreate;
 use App\Livewire\Academics\SubjectEdit;
 use App\Livewire\Academics\SubjectIndex;
+use App\Livewire\Academics\TimetableCreate;
+use App\Livewire\Academics\TimetableEdit;
+use App\Livewire\Academics\TimetableIndex;
 use App\Livewire\Staff\LeaveCreate;
 use App\Livewire\Staff\LeaveEdit;
 use App\Livewire\Staff\LeaveIndex;
@@ -58,6 +67,18 @@ Route::middleware(['auth', 'verified', 'role:admin|teacher'])
         Route::get('class-subjects', ClassSubjectIndex::class)->name('class-subjects.index');
         Route::get('class-subjects/create', ClassSubjectCreate::class)->name('class-subjects.create');
         Route::get('class-subjects/{classSubject}/edit', ClassSubjectEdit::class)->name('class-subjects.edit');
+
+        Route::get('timetable', TimetableIndex::class)->name('timetable.index');
+        Route::get('timetable/create', TimetableCreate::class)->name('timetable.create');
+        Route::get('timetable/{timetableSlot}/edit', TimetableEdit::class)->name('timetable.edit');
+
+        Route::get('exams', ExamIndex::class)->name('exams.index');
+        Route::get('exams/create', ExamCreate::class)->name('exams.create');
+        Route::get('exams/{exam}/edit', ExamEdit::class)->name('exams.edit');
+        Route::get('exam-results/{examSubject}/enter', ExamResultsEntry::class)->name('exam-results.enter');
+
+        Route::get('attendance', AttendanceIndex::class)->name('attendance.index');
+        Route::get('attendance/mark', AttendanceMark::class)->name('attendance.mark');
     });
 
 Route::middleware(['auth', 'verified', 'role:admin|teacher'])

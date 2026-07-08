@@ -22,4 +22,11 @@ class TimetableSlot extends Model
     {
         return $this->belongsTo(ClassSubject::class);
     }
+
+    protected function dayName(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn () => ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][$this->day_of_week] ?? (string) $this->day_of_week,
+        );
+    }
 }

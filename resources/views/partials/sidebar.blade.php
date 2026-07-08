@@ -28,6 +28,15 @@
                     <x-sidebar-link :href="route('academics.class-subjects.index')" :active="request()->routeIs('academics.class-subjects.*')" wire:navigate>
                         {{ __('Assignments') }}
                     </x-sidebar-link>
+                    <x-sidebar-link :href="route('academics.timetable.index')" :active="request()->routeIs('academics.timetable.*')" wire:navigate>
+                        {{ __('Timetable') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('academics.exams.index')" :active="request()->routeIs('academics.exams.*') || request()->routeIs('academics.exam-results.*')" wire:navigate>
+                        {{ __('Exams') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('academics.attendance.index')" :active="request()->routeIs('academics.attendance.*')" wire:navigate>
+                        {{ __('Attendance') }}
+                    </x-sidebar-link>
                 </div>
             </div>
 

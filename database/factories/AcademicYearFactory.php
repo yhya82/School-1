@@ -12,8 +12,9 @@ class AcademicYearFactory extends Factory
 {
     public function definition(): array
     {
-        $start = $this->faker->dateTimeBetween('-1 year', 'now');
-        $end = (clone $start)->modify('+1 year');
+        $startYear = $this->faker->unique()->numberBetween(1990, 2100);
+        $start = \Carbon\Carbon::createFromDate($startYear, 1, 1);
+        $end = (clone $start)->addYear();
 
         return [
             'name' => $start->format('Y').'/'.$end->format('Y'),
