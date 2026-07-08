@@ -36,4 +36,20 @@ class Invoice extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    /**
+     * Recompute and persist status from the sum of recorded payments.
+     */
+    public function recalculateStatus(): void
+    {
+        $totalPaid = $this->payments()->sum('amount_paid');
+
+        $status = match (true) {
+            $totalPaid <= 0 => 'unpaid',
+            $totalPaid < $this->amount_due => 'partial',
+            default => 'paid',
+        };
+
+        $this->update(['status' => $status]);
+    }
 }

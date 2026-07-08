@@ -67,5 +67,25 @@
                 </div>
             </div>
         @endrole
+
+        @role('admin')
+            <div>
+                <p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Finance') }}</p>
+                <div class="mt-1 space-y-1">
+                    <x-sidebar-link :href="route('finance.fee-structures.index')" :active="request()->routeIs('finance.fee-structures.*')" wire:navigate>
+                        {{ __('Fee Structures') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('finance.invoices.index')" :active="request()->routeIs('finance.invoices.*')" wire:navigate>
+                        {{ __('Invoices') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('finance.payments.index')" :active="request()->routeIs('finance.payments.*')" wire:navigate>
+                        {{ __('Payments') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('finance.expenses.index')" :active="request()->routeIs('finance.expenses.*')" wire:navigate>
+                        {{ __('Expenses') }}
+                    </x-sidebar-link>
+                </div>
+            </div>
+        @endrole
     </nav>
 </div>

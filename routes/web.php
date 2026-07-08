@@ -21,6 +21,18 @@ use App\Livewire\Academics\SubjectIndex;
 use App\Livewire\Academics\TimetableCreate;
 use App\Livewire\Academics\TimetableEdit;
 use App\Livewire\Academics\TimetableIndex;
+use App\Livewire\Finance\ExpenseCreate;
+use App\Livewire\Finance\ExpenseEdit;
+use App\Livewire\Finance\ExpenseIndex;
+use App\Livewire\Finance\FeeStructureCreate;
+use App\Livewire\Finance\FeeStructureEdit;
+use App\Livewire\Finance\FeeStructureIndex;
+use App\Livewire\Finance\InvoiceCreate;
+use App\Livewire\Finance\InvoiceEdit;
+use App\Livewire\Finance\InvoiceIndex;
+use App\Livewire\Finance\PaymentCreate;
+use App\Livewire\Finance\PaymentEdit;
+use App\Livewire\Finance\PaymentIndex;
 use App\Livewire\Staff\LeaveCreate;
 use App\Livewire\Staff\LeaveEdit;
 use App\Livewire\Staff\LeaveIndex;
@@ -109,6 +121,27 @@ Route::middleware(['auth', 'verified', 'role:admin|teacher'])
         Route::get('leaves', LeaveIndex::class)->name('leaves.index');
         Route::get('leaves/create', LeaveCreate::class)->name('leaves.create');
         Route::get('leaves/{leave}/edit', LeaveEdit::class)->name('leaves.edit');
+    });
+
+Route::middleware(['auth', 'verified', 'role:admin'])
+    ->prefix('finance')
+    ->name('finance.')
+    ->group(function () {
+        Route::get('fee-structures', FeeStructureIndex::class)->name('fee-structures.index');
+        Route::get('fee-structures/create', FeeStructureCreate::class)->name('fee-structures.create');
+        Route::get('fee-structures/{feeStructure}/edit', FeeStructureEdit::class)->name('fee-structures.edit');
+
+        Route::get('invoices', InvoiceIndex::class)->name('invoices.index');
+        Route::get('invoices/create', InvoiceCreate::class)->name('invoices.create');
+        Route::get('invoices/{invoice}/edit', InvoiceEdit::class)->name('invoices.edit');
+
+        Route::get('payments', PaymentIndex::class)->name('payments.index');
+        Route::get('payments/create', PaymentCreate::class)->name('payments.create');
+        Route::get('payments/{payment}/edit', PaymentEdit::class)->name('payments.edit');
+
+        Route::get('expenses', ExpenseIndex::class)->name('expenses.index');
+        Route::get('expenses/create', ExpenseCreate::class)->name('expenses.create');
+        Route::get('expenses/{expense}/edit', ExpenseEdit::class)->name('expenses.edit');
     });
 
 require __DIR__.'/auth.php';
