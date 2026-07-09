@@ -38,6 +38,7 @@ use App\Livewire\ParentPortal\ChildAttendance;
 use App\Livewire\ParentPortal\ChildInvoices;
 use App\Livewire\ParentPortal\ChildResults;
 use App\Livewire\ParentPortal\ChildrenIndex;
+use App\Livewire\Reports\ReportsIndex;
 use App\Livewire\Staff\LeaveCreate;
 use App\Livewire\Staff\LeaveEdit;
 use App\Livewire\Staff\LeaveIndex;
@@ -148,6 +149,10 @@ Route::middleware(['auth', 'verified', 'role:admin'])
         Route::get('expenses/create', ExpenseCreate::class)->name('expenses.create');
         Route::get('expenses/{expense}/edit', ExpenseEdit::class)->name('expenses.edit');
     });
+
+Route::get('reports', ReportsIndex::class)
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('reports.index');
 
 Route::middleware(['auth', 'verified', 'role:parent'])
     ->prefix('portal')
