@@ -21,10 +21,10 @@
             </select>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-100 dark:border-gray-700">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead>
-                    <tr class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <tr class="bg-gray-50 dark:bg-gray-900/40 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         <th class="px-6 py-3">{{ __('Section') }}</th>
                         <th class="px-6 py-3">{{ __('Subject') }}</th>
                         <th class="px-6 py-3">{{ __('Teacher') }}</th>
@@ -36,7 +36,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     @forelse ($slots as $slot)
-                        <tr wire:key="slot-{{ $slot->id }}">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors" wire:key="slot-{{ $slot->id }}">
                             <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $slot->section->schoolClass->name }} - {{ $slot->section->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $slot->classSubject->subject->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $slot->classSubject->teacher?->user->name ?? '—' }}</td>
@@ -45,7 +45,7 @@
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $slot->room }}</td>
                             <td class="px-6 py-4 text-sm text-right space-x-2">
                                 @can('update', $slot)
-                                    <a href="{{ route('academics.timetable.edit', $slot) }}" wire:navigate class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ __('Edit') }}</a>
+                                    <a href="{{ route('academics.timetable.edit', $slot) }}" wire:navigate class="text-navy-600 dark:text-navy-400 hover:underline">{{ __('Edit') }}</a>
                                 @endcan
                                 @can('delete', $slot)
                                     <button wire:click="delete({{ $slot->id }})" wire:confirm="{{ __('Delete this timetable slot?') }}" class="text-red-600 dark:text-red-400 hover:underline">{{ __('Delete') }}</button>
@@ -54,7 +54,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ __('No timetable slots yet.') }}</td>
+                            <td colspan="7" class="px-6 py-10 text-sm text-center text-gray-500 dark:text-gray-400">{{ __('No timetable slots yet.') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

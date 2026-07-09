@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\DashboardIndex;
 use App\Livewire\Academics\AcademicYearCreate;
 use App\Livewire\Academics\AcademicYearEdit;
 use App\Livewire\Academics\AcademicYearIndex;
@@ -52,7 +53,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', DashboardIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 

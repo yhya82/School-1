@@ -18,10 +18,10 @@
             </div>
         @endif
 
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-100 dark:border-gray-700">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead>
-                    <tr class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <tr class="bg-gray-50 dark:bg-gray-900/40 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         <th class="px-6 py-3">{{ __('Employee No.') }}</th>
                         <th class="px-6 py-3">{{ __('Name') }}</th>
                         <th class="px-6 py-3">{{ __('Designation') }}</th>
@@ -31,14 +31,14 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     @forelse ($staffMembers as $staff)
-                        <tr wire:key="staff-{{ $staff->id }}">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors" wire:key="staff-{{ $staff->id }}">
                             <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $staff->employee_no }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $staff->user->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $staff->designation }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $staff->department }}</td>
                             <td class="px-6 py-4 text-sm text-right space-x-2">
                                 @can('update', $staff)
-                                    <a href="{{ route('staff.staff.edit', $staff) }}" wire:navigate class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ __('Edit') }}</a>
+                                    <a href="{{ route('staff.staff.edit', $staff) }}" wire:navigate class="text-navy-600 dark:text-navy-400 hover:underline">{{ __('Edit') }}</a>
                                 @endcan
                                 @can('delete', $staff)
                                     <button wire:click="delete({{ $staff->id }})" wire:confirm="{{ __('Delete this staff member and their account?') }}" class="text-red-600 dark:text-red-400 hover:underline">{{ __('Delete') }}</button>
@@ -47,7 +47,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ __('No staff yet.') }}</td>
+                            <td colspan="5" class="px-6 py-10 text-sm text-center text-gray-500 dark:text-gray-400">{{ __('No staff yet.') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

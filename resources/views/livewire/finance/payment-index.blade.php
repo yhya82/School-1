@@ -11,10 +11,10 @@
             @endcan
         </div>
 
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-100 dark:border-gray-700">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead>
-                    <tr class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <tr class="bg-gray-50 dark:bg-gray-900/40 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         <th class="px-6 py-3">{{ __('Student') }}</th>
                         <th class="px-6 py-3">{{ __('Amount') }}</th>
                         <th class="px-6 py-3">{{ __('Method') }}</th>
@@ -24,14 +24,14 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     @forelse ($payments as $payment)
-                        <tr wire:key="payment-{{ $payment->id }}">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors" wire:key="payment-{{ $payment->id }}">
                             <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $payment->invoice->student->user->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ number_format($payment->amount_paid, 2) }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($payment->payment_method) }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $payment->payment_date->format('Y-m-d') }}</td>
                             <td class="px-6 py-4 text-sm text-right space-x-2">
                                 @can('update', $payment)
-                                    <a href="{{ route('finance.payments.edit', $payment) }}" wire:navigate class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ __('Edit') }}</a>
+                                    <a href="{{ route('finance.payments.edit', $payment) }}" wire:navigate class="text-navy-600 dark:text-navy-400 hover:underline">{{ __('Edit') }}</a>
                                 @endcan
                                 @can('delete', $payment)
                                     <button wire:click="delete({{ $payment->id }})" wire:confirm="{{ __('Delete this payment?') }}" class="text-red-600 dark:text-red-400 hover:underline">{{ __('Delete') }}</button>
@@ -40,7 +40,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ __('No payments yet.') }}</td>
+                            <td colspan="5" class="px-6 py-10 text-sm text-center text-gray-500 dark:text-gray-400">{{ __('No payments yet.') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

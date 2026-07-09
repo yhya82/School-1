@@ -41,14 +41,14 @@
                     <li class="py-2 flex justify-between items-center text-sm">
                         <span class="text-gray-900 dark:text-gray-100">
                             {{ $document->type }} —
-                            <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($document->file_path) }}" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ __('View') }}</a>
+                            <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($document->file_path) }}" target="_blank" class="text-navy-600 dark:text-navy-400 hover:underline">{{ __('View') }}</a>
                         </span>
                         @can('delete', $document)
                             <button wire:click="deleteDocument({{ $document->id }})" wire:confirm="{{ __('Delete this document?') }}" class="text-red-600 dark:text-red-400 hover:underline">{{ __('Delete') }}</button>
                         @endcan
                     </li>
                 @empty
-                    <li class="py-2 text-sm text-gray-500 dark:text-gray-400">{{ __('No documents yet.') }}</li>
+                    <li class="py-8 text-sm text-center text-gray-500 dark:text-gray-400">{{ __('No documents yet.') }}</li>
                 @endforelse
             </ul>
         </div>

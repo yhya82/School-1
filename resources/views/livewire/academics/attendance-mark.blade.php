@@ -27,14 +27,14 @@
                 @if ($students->isNotEmpty())
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 mt-6">
                         <thead>
-                            <tr class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <tr class="bg-gray-50 dark:bg-gray-900/40 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                 <th class="py-2">{{ __('Student') }}</th>
                                 <th class="py-2">{{ __('Status') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                             @foreach ($students as $student)
-                                <tr wire:key="student-{{ $student->id }}">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors" wire:key="student-{{ $student->id }}">
                                     <td class="py-2 text-sm text-gray-900 dark:text-gray-100">{{ $student->user->name }}</td>
                                     <td class="py-2">
                                         <select wire:model="statuses.{{ $student->id }}" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm">

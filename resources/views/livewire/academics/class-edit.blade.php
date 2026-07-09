@@ -45,12 +45,12 @@
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     @forelse ($sections as $section)
-                        <tr wire:key="section-{{ $section->id }}">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors" wire:key="section-{{ $section->id }}">
                             <td class="py-2 text-sm text-gray-900 dark:text-gray-100">{{ $section->name }}</td>
                             <td class="py-2 text-sm text-gray-500 dark:text-gray-400">{{ __('Capacity') }}: {{ $section->capacity }}</td>
                             <td class="py-2 text-sm text-right space-x-2">
                                 @can('update', $section)
-                                    <button wire:click="editSection({{ $section->id }})" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ __('Edit') }}</button>
+                                    <button wire:click="editSection({{ $section->id }})" class="text-navy-600 dark:text-navy-400 hover:underline">{{ __('Edit') }}</button>
                                 @endcan
                                 @can('delete', $section)
                                     <button wire:click="deleteSection({{ $section->id }})" wire:confirm="{{ __('Delete this section?') }}" class="text-red-600 dark:text-red-400 hover:underline">{{ __('Delete') }}</button>
@@ -59,7 +59,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td class="py-2 text-sm text-gray-500 dark:text-gray-400">{{ __('No sections yet.') }}</td>
+                            <td class="py-8 text-sm text-center text-gray-500 dark:text-gray-400">{{ __('No sections yet.') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

@@ -82,7 +82,7 @@
 
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead>
-                    <tr class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <tr class="bg-gray-50 dark:bg-gray-900/40 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         <th class="py-2">{{ __('Subject') }}</th>
                         <th class="py-2">{{ __('Exam Date') }}</th>
                         <th class="py-2">{{ __('Max/Pass') }}</th>
@@ -91,14 +91,14 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     @forelse ($examSubjects as $examSubject)
-                        <tr wire:key="exam-subject-{{ $examSubject->id }}">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors" wire:key="exam-subject-{{ $examSubject->id }}">
                             <td class="py-2 text-sm text-gray-900 dark:text-gray-100">{{ $examSubject->classSubject->schoolClass->name }} - {{ $examSubject->classSubject->subject->name }}</td>
                             <td class="py-2 text-sm text-gray-500 dark:text-gray-400">{{ $examSubject->exam_date?->format('Y-m-d') ?? '—' }}</td>
                             <td class="py-2 text-sm text-gray-500 dark:text-gray-400">{{ $examSubject->max_marks }} / {{ $examSubject->pass_marks }}</td>
                             <td class="py-2 text-sm text-right space-x-2">
-                                <a href="{{ route('academics.exam-results.enter', $examSubject) }}" wire:navigate class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ __('Enter Results') }}</a>
+                                <a href="{{ route('academics.exam-results.enter', $examSubject) }}" wire:navigate class="text-navy-600 dark:text-navy-400 hover:underline">{{ __('Enter Results') }}</a>
                                 @can('update', $examSubject)
-                                    <button wire:click="editExamSubject({{ $examSubject->id }})" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ __('Edit') }}</button>
+                                    <button wire:click="editExamSubject({{ $examSubject->id }})" class="text-navy-600 dark:text-navy-400 hover:underline">{{ __('Edit') }}</button>
                                 @endcan
                                 @can('delete', $examSubject)
                                     <button wire:click="deleteExamSubject({{ $examSubject->id }})" wire:confirm="{{ __('Remove this subject from the exam?') }}" class="text-red-600 dark:text-red-400 hover:underline">{{ __('Delete') }}</button>
@@ -107,7 +107,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="py-2 text-sm text-gray-500 dark:text-gray-400">{{ __('No subjects added to this exam yet.') }}</td>
+                            <td colspan="4" class="py-8 text-sm text-center text-gray-500 dark:text-gray-400">{{ __('No subjects added to this exam yet.') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

@@ -1,7 +1,8 @@
-<div class="h-full flex flex-col bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 w-64">
-    <div class="h-16 flex items-center px-4 border-b border-gray-100 dark:border-gray-700">
-        <a href="{{ route('dashboard') }}" wire:navigate>
-            <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+<div class="h-full flex flex-col bg-navy-900 border-r border-navy-800 w-64">
+    <div class="h-16 flex items-center px-4 border-b border-navy-800">
+        <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-2">
+            <x-application-logo class="block h-8 w-auto fill-current text-white" />
+            <span class="text-white font-semibold tracking-wide">{{ config('app.name') }}</span>
         </a>
     </div>
 
@@ -14,7 +15,7 @@
 
         @role('admin|teacher')
             <div>
-                <p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Academics') }}</p>
+                <p class="px-3 text-xs font-semibold text-navy-400 uppercase tracking-wider">{{ __('Academics') }}</p>
                 <div class="mt-1 space-y-1">
                     <x-sidebar-link :href="route('academics.years.index')" :active="request()->routeIs('academics.years.*')" wire:navigate>
                         {{ __('Academic Years') }}
@@ -41,7 +42,7 @@
             </div>
 
             <div>
-                <p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Students') }}</p>
+                <p class="px-3 text-xs font-semibold text-navy-400 uppercase tracking-wider">{{ __('Students') }}</p>
                 <div class="mt-1 space-y-1">
                     <x-sidebar-link :href="route('students.students.index')" :active="request()->routeIs('students.students.*')" wire:navigate>
                         {{ __('Students') }}
@@ -53,7 +54,7 @@
             </div>
 
             <div>
-                <p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Staff') }}</p>
+                <p class="px-3 text-xs font-semibold text-navy-400 uppercase tracking-wider">{{ __('Staff') }}</p>
                 <div class="mt-1 space-y-1">
                     <x-sidebar-link :href="route('staff.staff.index')" :active="request()->routeIs('staff.staff.*')" wire:navigate>
                         {{ __('Staff') }}
@@ -70,7 +71,7 @@
 
         @role('admin')
             <div>
-                <p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Finance') }}</p>
+                <p class="px-3 text-xs font-semibold text-navy-400 uppercase tracking-wider">{{ __('Finance') }}</p>
                 <div class="mt-1 space-y-1">
                     <x-sidebar-link :href="route('finance.fee-structures.index')" :active="request()->routeIs('finance.fee-structures.*')" wire:navigate>
                         {{ __('Fee Structures') }}

@@ -55,7 +55,7 @@
                         {{ number_format($payment->amount_paid, 2) }} — {{ ucfirst($payment->payment_method) }} — {{ $payment->payment_date->format('Y-m-d') }}
                     </li>
                 @empty
-                    <li class="py-2 text-sm text-gray-500 dark:text-gray-400">{{ __('No payments recorded yet.') }}</li>
+                    <li class="py-8 text-sm text-center text-gray-500 dark:text-gray-400">{{ __('No payments recorded yet.') }}</li>
                 @endforelse
             </ul>
         </div>

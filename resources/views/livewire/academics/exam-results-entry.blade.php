@@ -9,7 +9,7 @@
             <form wire:submit="save">
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead>
-                        <tr class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        <tr class="bg-gray-50 dark:bg-gray-900/40 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                             <th class="py-2">{{ __('Admission No.') }}</th>
                             <th class="py-2">{{ __('Student') }}</th>
                             <th class="py-2">{{ __('Marks') }}</th>
@@ -17,7 +17,7 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         @forelse ($students as $student)
-                            <tr wire:key="student-{{ $student->id }}">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors" wire:key="student-{{ $student->id }}">
                                 <td class="py-2 text-sm text-gray-500 dark:text-gray-400">{{ $student->admission_no }}</td>
                                 <td class="py-2 text-sm text-gray-900 dark:text-gray-100">{{ $student->user->name }}</td>
                                 <td class="py-2">
@@ -27,7 +27,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="py-2 text-sm text-gray-500 dark:text-gray-400">{{ __('No active students in this class.') }}</td>
+                                <td colspan="3" class="py-8 text-sm text-center text-gray-500 dark:text-gray-400">{{ __('No active students in this class.') }}</td>
                             </tr>
                         @endforelse
                     </tbody>
