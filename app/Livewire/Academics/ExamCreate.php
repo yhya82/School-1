@@ -4,6 +4,7 @@ namespace App\Livewire\Academics;
 
 use App\Models\AcademicYear;
 use App\Models\Exam;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -22,6 +23,10 @@ class ExamCreate extends Component
     public function mount(): void
     {
         Gate::authorize('create', Exam::class);
+
+        $this->academic_year_id = Setting::get('current_academic_year_id')
+            ? (int) Setting::get('current_academic_year_id')
+            : null;
     }
 
     protected function rules(): array

@@ -6,6 +6,7 @@ use App\Models\AcademicYear;
 use App\Models\Guardian;
 use App\Models\Section;
 use App\Models\SchoolClass;
+use App\Models\Setting;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
@@ -40,6 +41,10 @@ class StudentCreate extends Component
     public function mount(): void
     {
         Gate::authorize('create', Student::class);
+
+        $this->academic_year_id = Setting::get('current_academic_year_id')
+            ? (int) Setting::get('current_academic_year_id')
+            : null;
     }
 
     public function updatedClassId(): void

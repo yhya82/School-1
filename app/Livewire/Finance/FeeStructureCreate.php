@@ -5,6 +5,7 @@ namespace App\Livewire\Finance;
 use App\Models\AcademicYear;
 use App\Models\FeeStructure;
 use App\Models\SchoolClass;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -25,6 +26,10 @@ class FeeStructureCreate extends Component
     public function mount(): void
     {
         Gate::authorize('create', FeeStructure::class);
+
+        $this->academic_year_id = Setting::get('current_academic_year_id')
+            ? (int) Setting::get('current_academic_year_id')
+            : null;
     }
 
     protected function rules(): array

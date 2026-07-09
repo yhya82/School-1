@@ -107,6 +107,15 @@
                     </x-sidebar-link>
                 </div>
             </div>
+
+            <div>
+                <p class="px-3 text-xs font-semibold text-navy-400 uppercase tracking-wider">{{ __('Administration') }}</p>
+                <div class="mt-1 space-y-1">
+                    <x-sidebar-link :href="route('settings.index')" :active="request()->routeIs('settings.*')" wire:navigate>
+                        {{ __('Settings') }}
+                    </x-sidebar-link>
+                </div>
+            </div>
         @endrole
     </nav>
 </div>
