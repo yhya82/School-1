@@ -65,6 +65,17 @@ class DemoDataSeeder extends Seeder
 
         $guardians = Guardian::factory()->count(20)->create();
 
+        $portalGuardian = $guardians->first();
+        $portalUser = User::factory()->create(['email' => 'parent@school.test']);
+        $portalUser->assignRole('parent');
+        $portalGuardian->update(['user_id' => $portalUser->id]);
+
+        foreach ($guardians->slice(1, 4) as $guardian) {
+            $user = User::factory()->create();
+            $user->assignRole('parent');
+            $guardian->update(['user_id' => $user->id]);
+        }
+
         $students = $sections->flatMap(function (Section $section) use ($academicYear, $guardians) {
             return Student::factory()->count(5)->create([
                 'class_id' => $section->class_id,

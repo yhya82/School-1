@@ -11,6 +11,13 @@
             @endcan
         </div>
 
+        @if (session('generated_password'))
+            <div class="bg-yellow-50 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 rounded-lg p-4 text-sm text-yellow-800 dark:text-yellow-200">
+                {{ __('Generated portal password for the new account (shown only once): ') }}
+                <span class="font-mono font-semibold">{{ session('generated_password') }}</span>
+            </div>
+        @endif
+
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-100 dark:border-gray-700">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead>
@@ -19,6 +26,7 @@
                         <th class="px-6 py-3">{{ __('Phone') }}</th>
                         <th class="px-6 py-3">{{ __('Relationship') }}</th>
                         <th class="px-6 py-3">{{ __('Children') }}</th>
+                        <th class="px-6 py-3">{{ __('Portal Access') }}</th>
                         <th class="px-6 py-3"></th>
                     </tr>
                 </thead>
@@ -29,6 +37,7 @@
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $guardian->phone }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $guardian->relationship }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $guardian->students_count }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $guardian->user_id ? __('Enabled') : __('None') }}</td>
                             <td class="px-6 py-4 text-sm text-right space-x-2">
                                 @can('update', $guardian)
                                     <a href="{{ route('students.guardians.edit', $guardian) }}" wire:navigate class="text-navy-600 dark:text-navy-400 hover:underline">{{ __('Edit') }}</a>
@@ -40,7 +49,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-10 text-sm text-center text-gray-500 dark:text-gray-400">{{ __('No guardians yet.') }}</td>
+                            <td colspan="6" class="px-6 py-10 text-sm text-center text-gray-500 dark:text-gray-400">{{ __('No guardians yet.') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

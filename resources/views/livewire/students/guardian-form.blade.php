@@ -19,6 +19,12 @@
         </select>
         <x-input-error :messages="$errors->get('relationship')" class="mt-2" />
     </div>
+    <div class="mt-4">
+        <x-input-label for="email" value="{{ __('Portal Login Email (optional)') }}" />
+        <x-text-input wire:model="email" id="email" type="email" class="mt-1 block w-full" placeholder="parent@example.com" />
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Set an email to give this guardian access to the parent portal.') }}</p>
+        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    </div>
     <div class="mt-6 flex gap-3">
         <x-primary-button>{{ $submitLabel }}</x-primary-button>
         <a href="{{ route('students.guardians.index') }}" wire:navigate>

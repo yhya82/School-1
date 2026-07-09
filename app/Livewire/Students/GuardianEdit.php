@@ -3,7 +3,10 @@
 namespace App\Livewire\Students;
 
 use App\Models\Guardian;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -18,6 +21,8 @@ class GuardianEdit extends Component
 
     public string $relationship = '';
 
+    public string $email = '';
+
     public function mount(Guardian $guardian): void
     {
         Gate::authorize('update', $guardian);
@@ -26,6 +31,7 @@ class GuardianEdit extends Component
         $this->name = $guardian->name;
         $this->phone = $guardian->phone;
         $this->relationship = $guardian->relationship;
+        $this->email = $guardian->user?->email ?? '';
     }
 
     protected function rules(): array
@@ -34,6 +40,7 @@ class GuardianEdit extends Component
             'name' => 'required|string|max:100',
             'phone' => 'required|string|max:20',
             'relationship' => 'required|string|max:30',
+            'email' => 'nullable|email|unique:users,email,'.($this->guardian->user_id ?? 'NULL'),
         ];
     }
 
@@ -43,7 +50,29 @@ class GuardianEdit extends Component
 
         $data = $this->validate();
 
-        $this->guardian->update($data);
+        $this->guardian->update([
+            'name' => $data['name'],
+            'phone' => $data['phone'],
+            'relationship' => $data['relationship'],
+        ]);
+
+        if ($this->guardian->user) {
+            if (! empty($data['email'])) {
+                $this->guardian->user->update(['name' => $data['name'], 'email' => $data['email']]);
+            }
+        } elseif (! empty($data['email'])) {
+            $password = Str::password(12);
+
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($password),
+            ]);
+            $user->assignRole('parent');
+            $this->guardian->update(['user_id' => $user->id]);
+
+            session()->flash('generated_password', $password);
+        }
 
         $this->redirectRoute('students.guardians.index', navigate: true);
     }

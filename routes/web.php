@@ -34,6 +34,10 @@ use App\Livewire\Finance\InvoiceIndex;
 use App\Livewire\Finance\PaymentCreate;
 use App\Livewire\Finance\PaymentEdit;
 use App\Livewire\Finance\PaymentIndex;
+use App\Livewire\ParentPortal\ChildAttendance;
+use App\Livewire\ParentPortal\ChildInvoices;
+use App\Livewire\ParentPortal\ChildResults;
+use App\Livewire\ParentPortal\ChildrenIndex;
 use App\Livewire\Staff\LeaveCreate;
 use App\Livewire\Staff\LeaveEdit;
 use App\Livewire\Staff\LeaveIndex;
@@ -143,6 +147,16 @@ Route::middleware(['auth', 'verified', 'role:admin'])
         Route::get('expenses', ExpenseIndex::class)->name('expenses.index');
         Route::get('expenses/create', ExpenseCreate::class)->name('expenses.create');
         Route::get('expenses/{expense}/edit', ExpenseEdit::class)->name('expenses.edit');
+    });
+
+Route::middleware(['auth', 'verified', 'role:parent'])
+    ->prefix('portal')
+    ->name('portal.')
+    ->group(function () {
+        Route::get('/', ChildrenIndex::class)->name('children.index');
+        Route::get('children/{student}/attendance', ChildAttendance::class)->name('children.attendance');
+        Route::get('children/{student}/results', ChildResults::class)->name('children.results');
+        Route::get('children/{student}/invoices', ChildInvoices::class)->name('children.invoices');
     });
 
 require __DIR__.'/auth.php';

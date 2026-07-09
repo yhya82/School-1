@@ -21,10 +21,13 @@ class DashboardIndex extends Component
         $user = Auth::user();
         $canViewAcademics = $user->hasAnyRole(['admin', 'teacher']);
         $isAdmin = $user->hasRole('admin');
+        $isParent = $user->hasRole('parent');
 
         return view('livewire.dashboard-index', [
             'canViewAcademics' => $canViewAcademics,
             'isAdmin' => $isAdmin,
+            'isParent' => $isParent,
+            'children' => $isParent ? $user->guardian?->students()->with(['user', 'schoolClass', 'section'])->get() : null,
             'studentCount' => $canViewAcademics ? Student::where('status', 'active')->count() : null,
             'staffCount' => $canViewAcademics ? Staff::count() : null,
             'classCount' => $canViewAcademics ? SchoolClass::count() : null,

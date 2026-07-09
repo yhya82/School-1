@@ -69,6 +69,17 @@
             </div>
         @endrole
 
+        @role('parent')
+            <div>
+                <p class="px-3 text-xs font-semibold text-navy-400 uppercase tracking-wider">{{ __('Parent Portal') }}</p>
+                <div class="mt-1 space-y-1">
+                    <x-sidebar-link :href="route('portal.children.index')" :active="request()->routeIs('portal.children.*')" wire:navigate>
+                        {{ __('My Children') }}
+                    </x-sidebar-link>
+                </div>
+            </div>
+        @endrole
+
         @role('admin')
             <div>
                 <p class="px-3 text-xs font-semibold text-navy-400 uppercase tracking-wider">{{ __('Finance') }}</p>

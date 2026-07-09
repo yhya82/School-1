@@ -53,6 +53,23 @@
                     </div>
                 @endif
             </div>
+        @elseif ($isParent)
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                    <h3 class="font-medium text-gray-800 dark:text-gray-200">{{ __('My Children') }}</h3>
+                    <a href="{{ route('portal.children.index') }}" wire:navigate class="text-sm text-navy-600 dark:text-navy-400 hover:underline">{{ __('View all') }}</a>
+                </div>
+                <ul class="divide-y divide-gray-100 dark:divide-gray-700">
+                    @forelse ($children ?? [] as $child)
+                        <li class="px-6 py-3 flex items-center justify-between text-sm">
+                            <span class="text-gray-900 dark:text-gray-100">{{ $child->user->name }}</span>
+                            <span class="text-gray-500 dark:text-gray-400">{{ $child->schoolClass->name }} - {{ $child->section->name }}</span>
+                        </li>
+                    @empty
+                        <li class="px-6 py-8 text-center text-sm text-gray-500 dark:text-gray-400">{{ __('No children linked to your account yet.') }}</li>
+                    @endforelse
+                </ul>
+            </div>
         @else
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg p-6">
                 <p class="text-gray-600 dark:text-gray-400">{{ __("You're logged in.") }}</p>
