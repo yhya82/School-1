@@ -13,9 +13,16 @@ class InvoiceIndex extends Component
 {
     use WithPagination;
 
+    public string $search = '';
+
     public function mount(): void
     {
         Gate::authorize('viewAny', Invoice::class);
+    }
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
     }
 
     public function delete(int $id): void
@@ -28,7 +35,10 @@ class InvoiceIndex extends Component
     public function render()
     {
         return view('livewire.finance.invoice-index', [
-            'invoices' => Invoice::with(['student.user', 'feeStructure'])->orderByDesc('due_date')->paginate(20),
+            'invoices' => Invoice::with(['student.user', 'feeStructure'])
+                ->when($this->search, fn ($query, $value) => $query->whereHas('student.user', fn ($q) => $q->where('name', 'like', "%{$value}%")))
+                ->orderByDesc('due_date')
+                ->paginate(20),
         ]);
     }
 }

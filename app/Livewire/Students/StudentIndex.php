@@ -6,13 +6,23 @@ use App\Models\Student;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
 class StudentIndex extends Component
 {
+    use WithPagination;
+
+    public string $search = '';
+
     public function mount(): void
     {
         Gate::authorize('viewAny', Student::class);
+    }
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
     }
 
     public function delete(int $id): void
@@ -27,7 +37,12 @@ class StudentIndex extends Component
     public function render()
     {
         return view('livewire.students.student-index', [
-            'students' => Student::with(['user', 'schoolClass', 'section'])->orderBy('admission_no')->get(),
+            'students' => Student::with(['user', 'schoolClass', 'section'])
+                ->when($this->search, fn ($query, $value) => $query->where(fn ($q) => $q
+                    ->where('admission_no', 'like', "%{$value}%")
+                    ->orWhereHas('user', fn ($q2) => $q2->where('name', 'like', "%{$value}%"))))
+                ->orderBy('admission_no')
+                ->paginate(15),
         ]);
     }
 }

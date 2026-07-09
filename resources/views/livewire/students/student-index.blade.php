@@ -11,6 +11,11 @@
             @endcan
         </div>
 
+        <div>
+            <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search by admission no. or name...') }}"
+                class="w-full sm:w-72 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 shadow-sm focus:border-navy-500 focus:ring-navy-500 text-sm" />
+        </div>
+
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-100 dark:border-gray-700">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead>
@@ -28,7 +33,7 @@
                             <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $student->admission_no }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $student->user->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $student->schoolClass->name }} - {{ $student->section->name }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($student->status) }}</td>
+                            <td class="px-6 py-4 text-sm"><x-status-badge :status="$student->status" /></td>
                             <td class="px-6 py-4 text-sm text-right space-x-2">
                                 @can('update', $student)
                                     <a href="{{ route('students.students.edit', $student) }}" wire:navigate class="text-navy-600 dark:text-navy-400 hover:underline">{{ __('Edit') }}</a>
@@ -45,6 +50,9 @@
                     @endforelse
                 </tbody>
             </table>
+            <div class="p-4">
+                {{ $students->links() }}
+            </div>
         </div>
     </div>
 </div>

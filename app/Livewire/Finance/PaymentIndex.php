@@ -13,9 +13,16 @@ class PaymentIndex extends Component
 {
     use WithPagination;
 
+    public string $search = '';
+
     public function mount(): void
     {
         Gate::authorize('viewAny', Payment::class);
+    }
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
     }
 
     public function delete(int $id): void
@@ -30,7 +37,10 @@ class PaymentIndex extends Component
     public function render()
     {
         return view('livewire.finance.payment-index', [
-            'payments' => Payment::with(['invoice.student.user'])->orderByDesc('payment_date')->paginate(20),
+            'payments' => Payment::with(['invoice.student.user'])
+                ->when($this->search, fn ($query, $value) => $query->whereHas('invoice.student.user', fn ($q) => $q->where('name', 'like', "%{$value}%")))
+                ->orderByDesc('payment_date')
+                ->paginate(20),
         ]);
     }
 }

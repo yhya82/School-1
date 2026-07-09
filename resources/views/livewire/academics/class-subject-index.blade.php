@@ -43,6 +43,9 @@
                     @endforelse
                 </tbody>
             </table>
+            <div class="p-4">
+                {{ $assignments->links() }}
+            </div>
         </div>
     </div>
 </div>

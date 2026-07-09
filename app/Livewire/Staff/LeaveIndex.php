@@ -6,13 +6,23 @@ use App\Models\Leave;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
 class LeaveIndex extends Component
 {
+    use WithPagination;
+
+    public string $search = '';
+
     public function mount(): void
     {
         Gate::authorize('viewAny', Leave::class);
+    }
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
     }
 
     public function delete(int $id): void
@@ -25,7 +35,10 @@ class LeaveIndex extends Component
     public function render()
     {
         return view('livewire.staff.leave-index', [
-            'leaves' => Leave::with(['staff.user', 'approver.user'])->orderByDesc('start_date')->get(),
+            'leaves' => Leave::with(['staff.user', 'approver.user'])
+                ->when($this->search, fn ($query, $value) => $query->whereHas('staff.user', fn ($q) => $q->where('name', 'like', "%{$value}%")))
+                ->orderByDesc('start_date')
+                ->paginate(15),
         ]);
     }
 }

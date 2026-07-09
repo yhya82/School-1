@@ -18,9 +18,16 @@ class AttendanceIndex extends Component
     #[Url]
     public ?int $section_id = null;
 
+    public string $search = '';
+
     public function mount(): void
     {
         Gate::authorize('viewAny', Attendance::class);
+    }
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
     }
 
     public function delete(int $id): void
@@ -36,6 +43,10 @@ class AttendanceIndex extends Component
 
         if ($this->section_id) {
             $query->where('section_id', $this->section_id);
+        }
+
+        if ($this->search) {
+            $query->whereHas('student.user', fn ($q) => $q->where('name', 'like', "%{$this->search}%"));
         }
 
         return view('livewire.academics.attendance-index', [

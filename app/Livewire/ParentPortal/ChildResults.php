@@ -7,10 +7,13 @@ use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
 class ChildResults extends Component
 {
+    use WithPagination;
+
     public Student $student;
 
     public function mount(Student $student): void
@@ -24,10 +27,13 @@ class ChildResults extends Component
     public function render()
     {
         return view('livewire.parent-portal.child-results', [
-            'results' => ExamResult::where('student_id', $this->student->id)
+            'results' => ExamResult::where('exam_results.student_id', $this->student->id)
+                ->join('exam_subjects', 'exam_subjects.id', '=', 'exam_results.exam_subject_id')
+                ->join('exams', 'exams.id', '=', 'exam_subjects.exam_id')
                 ->with(['examSubject.exam', 'examSubject.classSubject.subject'])
-                ->get()
-                ->sortByDesc(fn ($result) => $result->examSubject->exam->start_date),
+                ->orderByDesc('exams.start_date')
+                ->select('exam_results.*')
+                ->paginate(15),
         ]);
     }
 }

@@ -7,6 +7,21 @@
             <a href="{{ route('portal.children.index') }}" wire:navigate class="text-sm text-navy-600 dark:text-navy-400 hover:underline">{{ __('Back to My Children') }}</a>
         </div>
 
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 p-4">
+                <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Total Due') }}</p>
+                <p class="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">{{ number_format($totalDue, 2) }}</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 p-4">
+                <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Total Paid') }}</p>
+                <p class="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">{{ number_format($totalPaid, 2) }}</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 p-4">
+                <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Outstanding') }}</p>
+                <p class="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">{{ number_format($totalDue - $totalPaid, 2) }}</p>
+            </div>
+        </div>
+
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-100 dark:border-gray-700">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead>
@@ -25,7 +40,7 @@
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ number_format($invoice->amount_due, 2) }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ number_format($invoice->payments->sum('amount_paid'), 2) }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $invoice->due_date->format('Y-m-d') }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($invoice->status) }}</td>
+                            <td class="px-6 py-4 text-sm"><x-status-badge :status="$invoice->status" /></td>
                         </tr>
                     @empty
                         <tr>
@@ -34,6 +49,9 @@
                     @endforelse
                 </tbody>
             </table>
+            <div class="p-4">
+                {{ $invoices->links() }}
+            </div>
         </div>
     </div>
 </div>

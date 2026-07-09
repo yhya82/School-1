@@ -18,6 +18,11 @@
             </div>
         @endif
 
+        <div>
+            <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search by employee no. or name...') }}"
+                class="w-full sm:w-72 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 shadow-sm focus:border-navy-500 focus:ring-navy-500 text-sm" />
+        </div>
+
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-100 dark:border-gray-700">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead>
@@ -52,6 +57,9 @@
                     @endforelse
                 </tbody>
             </table>
+            <div class="p-4">
+                {{ $staffMembers->links() }}
+            </div>
         </div>
     </div>
 </div>

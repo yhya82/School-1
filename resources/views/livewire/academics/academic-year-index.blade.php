@@ -43,6 +43,9 @@
                     @endforelse
                 </tbody>
             </table>
+            <div class="p-4">
+                {{ $years->links() }}
+            </div>
         </div>
     </div>
 </div>

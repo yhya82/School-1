@@ -19,7 +19,7 @@
                     @forelse ($attendances as $attendance)
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors" wire:key="attendance-{{ $attendance->id }}">
                             <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $attendance->date->format('Y-m-d') }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($attendance->status) }}</td>
+                            <td class="px-6 py-4 text-sm"><x-status-badge :status="$attendance->status" /></td>
                         </tr>
                     @empty
                         <tr>

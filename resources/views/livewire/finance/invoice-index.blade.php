@@ -11,6 +11,11 @@
             @endcan
         </div>
 
+        <div>
+            <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search by student name...') }}"
+                class="w-full sm:w-72 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 shadow-sm focus:border-navy-500 focus:ring-navy-500 text-sm" />
+        </div>
+
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-100 dark:border-gray-700">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead>
@@ -30,7 +35,7 @@
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $invoice->feeStructure->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ number_format($invoice->amount_due, 2) }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $invoice->due_date->format('Y-m-d') }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($invoice->status) }}</td>
+                            <td class="px-6 py-4 text-sm"><x-status-badge :status="$invoice->status" /></td>
                             <td class="px-6 py-4 text-sm text-right space-x-2">
                                 @can('update', $invoice)
                                     <a href="{{ route('finance.invoices.edit', $invoice) }}" wire:navigate class="text-navy-600 dark:text-navy-400 hover:underline">{{ __('Edit') }}</a>

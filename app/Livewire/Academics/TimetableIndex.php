@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
 class TimetableIndex extends Component
 {
+    use WithPagination;
+
     #[Url]
     public ?int $section_id = null;
 
@@ -38,7 +41,7 @@ class TimetableIndex extends Component
         }
 
         return view('livewire.academics.timetable-index', [
-            'slots' => $query->get(),
+            'slots' => $query->paginate(15),
             'sections' => Section::with('schoolClass')->orderBy('class_id')->orderBy('name')->get(),
         ]);
     }

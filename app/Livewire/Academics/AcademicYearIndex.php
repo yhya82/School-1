@@ -6,10 +6,13 @@ use App\Models\AcademicYear;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
 class AcademicYearIndex extends Component
 {
+    use WithPagination;
+
     public function mount(): void
     {
         Gate::authorize('viewAny', AcademicYear::class);
@@ -25,7 +28,7 @@ class AcademicYearIndex extends Component
     public function render()
     {
         return view('livewire.academics.academic-year-index', [
-            'years' => AcademicYear::orderByDesc('start_date')->get(),
+            'years' => AcademicYear::orderByDesc('start_date')->paginate(15),
         ]);
     }
 }

@@ -44,7 +44,10 @@
                             @forelse ($pendingLeaves as $leave)
                                 <li class="px-6 py-3 flex items-center justify-between text-sm">
                                     <span class="text-gray-900 dark:text-gray-100">{{ $leave->staff->user->name }}</span>
-                                    <span class="text-gray-500 dark:text-gray-400">{{ ucfirst($leave->leave_type) }}, {{ $leave->start_date->format('M j') }} – {{ $leave->end_date->format('M j') }}</span>
+                                    <span class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                                        {{ ucfirst($leave->leave_type) }}, {{ $leave->start_date->format('M j') }} – {{ $leave->end_date->format('M j') }}
+                                        <x-status-badge :status="$leave->status" />
+                                    </span>
                                 </li>
                             @empty
                                 <li class="px-6 py-8 text-center text-sm text-gray-500 dark:text-gray-400">{{ __('No pending leave requests.') }}</li>

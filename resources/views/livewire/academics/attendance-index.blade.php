@@ -11,14 +11,21 @@
             @endcan
         </div>
 
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4">
-            <x-input-label for="section_id" value="{{ __('Filter by section') }}" />
-            <select wire:model.live="section_id" id="section_id" class="mt-1 block w-full sm:w-64 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm">
-                <option value="">{{ __('All sections') }}</option>
-                @foreach ($sections as $section)
-                    <option value="{{ $section->id }}">{{ $section->schoolClass->name }} - {{ $section->name }}</option>
-                @endforeach
-            </select>
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4 flex flex-col sm:flex-row gap-4">
+            <div>
+                <x-input-label for="section_id" value="{{ __('Filter by section') }}" />
+                <select wire:model.live="section_id" id="section_id" class="mt-1 block w-full sm:w-64 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm">
+                    <option value="">{{ __('All sections') }}</option>
+                    @foreach ($sections as $section)
+                        <option value="{{ $section->id }}">{{ $section->schoolClass->name }} - {{ $section->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <x-input-label for="search" value="{{ __('Search by student name') }}" />
+                <input type="text" wire:model.live.debounce.300ms="search" id="search" placeholder="{{ __('Search...') }}"
+                    class="mt-1 block w-full sm:w-64 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 shadow-sm focus:border-navy-500 focus:ring-navy-500 text-sm" />
+            </div>
         </div>
 
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-100 dark:border-gray-700">
@@ -38,7 +45,7 @@
                             <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $attendance->student->user->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $attendance->section->schoolClass->name }} - {{ $attendance->section->name }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $attendance->date->format('Y-m-d') }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($attendance->status) }}</td>
+                            <td class="px-6 py-4 text-sm"><x-status-badge :status="$attendance->status" /></td>
                             <td class="px-6 py-4 text-sm text-right space-x-2">
                                 @can('delete', $attendance)
                                     <button wire:click="delete({{ $attendance->id }})" wire:confirm="{{ __('Delete this attendance record?') }}" class="text-red-600 dark:text-red-400 hover:underline">{{ __('Delete') }}</button>
